@@ -1,0 +1,9 @@
+{
+	"user": "killermvc",
+	"repo": "pawn-map",
+	"entry": "test.pwn",
+	"output": "test.amx",
+	"dependencies": [
+		"sampctl/samp-stdlib"
+	]
+}
