@@ -1,6 +1,5 @@
 #define RUN_TESTS
 #define YSI_NO_VERSION_CHECK
-#pragma dynamic 65536
 #include <a_samp>
 #include "map.inc"
 #include <YSI_Core\y_testing>
@@ -61,37 +60,38 @@ Test:Remove2()
 	ASSERT(Map_ContainsKey(map, "key2"));
 }
 
+new Map:map1<100, 16>;
 Test:Add100()
 {
-	new Map:map<100, 16>, key[7];
+	new key[7];
 	for(new i = 0; i < 100; ++i)
 	{
 		format(key, sizeof key, "key%d", i);
-		Map_Add(map, key, i+1);
+		Map_Add(map1, key, i+1);
 	}
 
 	for(new i = 0; i < 100; ++i)
 	{
 		format(key, sizeof key, "key%d", i);
-		ASSERT(Map_ContainsKey(map, key));
-		ASSERT_EQ(i+1, Map_GetValue(map, key));
+		ASSERT(Map_ContainsKey(map1, key));
+		ASSERT_EQ(i+1, Map_GetValue(map1, key));
 	}
 }
 
+new Map:map2<100, 16>;
 Test:Remove50()
 {
-	new Map:map<100, 16>, key[7];
+	new key[7];
 	for(new i = 0; i < 100; ++i)
 	{
 		format(key, sizeof key, "key%d", i);
-		Map_Add(map, key, i+1);
+		Map_Add(map2, key, i+1);
 	}
 
 	for(new i = 0; i < 100; i += 2)
 	{
-		printf("i");
 		format(key, sizeof key, "key%d", i);
-		Map_Remove(map, key);
+		Map_Remove(map2, key);
 	}
 
 	for(new i = 0; i < 100; ++i)
@@ -99,12 +99,12 @@ Test:Remove50()
 		format(key, sizeof key, "key%d", i);
 		if(i % 2 == 0)
 		{
-			ASSERT_FALSE(Map_ContainsKey(map, key));
+			ASSERT_FALSE(Map_ContainsKey(map2, key));
 		}
 		else
 		{
-			ASSERT(Map_ContainsKey(map, key));
-			ASSERT_EQ(i+1, Map_GetValue(map, key));
+			ASSERT(Map_ContainsKey(map2, key));
+			ASSERT_EQ(i+1, Map_GetValue(map2, key));
 		}
 	}
 }
