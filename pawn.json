@@ -4,6 +4,24 @@
 	"entry": "test.pwn",
 	"output": "test.amx",
 	"dependencies": [
-		"sampctl/samp-stdlib"
-	]
+		"sampctl/samp-stdlib",
+		"pawn-lang/YSI-Includes@5.x"
+	],
+	"dev_dependencies": [
+		"pawn-lang/YSI-Includes"
+	],
+	"runtime": {
+		"version": "0.3.7",
+		"mode": "y_testing",
+		"rcon_password": "password",
+		"port": 8192,
+		"hostname": "SA-MP Server",
+		"maxplayers": 50,
+		"language": ""
+	},
+	"build": {
+		"name": "test",
+		"version": "3.10.10",
+		"compiler": {}
+	}
 }
