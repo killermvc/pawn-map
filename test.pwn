@@ -8,18 +8,19 @@ Test:New()
 {
 	const
 		size1 = 12,
-		size2 = 16;
-	new Map:map<size1, size2>;
+		size2 = 5,
+		size3 = 16;
+	new Map:map<size1, size2, size3>;
 	#pragma unused map
 	ASSERT_EQ(sizeof map, size1);
-	ASSERT_EQ(sizeof map[], MAX_COLLISIONS);
-	ASSERT_EQ(sizeof map[][], size2 + 2);
+	ASSERT_EQ(sizeof map[], size2);
+	ASSERT_EQ(sizeof map[][], size3 + 2);
 }
 
 Test:Add()
 {
 	const size = 12;
-	new Map:map<size, 16>;
+	new Map:map<size, 5, 16>;
 	Map_Add(map, "key", 20);
 	new idx = fnv1("key") % size;
 	ASSERT_EQ(map[idx][0][0], 20);
@@ -28,21 +29,21 @@ Test:Add()
 
 Test:Get()
 {
-	new Map:map<12, 16>;
+	new Map:map<12, 5, 16>;
 	Map_Add(map, "key", 20);
 	ASSERT_EQ(20, Map_GetValue(map, "key"));
 }
 
 Test:ContainsKey()
 {
-	new Map:map<12, 16>;
+	new Map:map<12, 5, 16>;
 	Map_Add(map, "key", 20);
 	ASSERT(Map_ContainsKey(map, "key"));
 }
 
 Test:Remove1()
 {
-	new Map:map<12, 16>;
+	new Map:map<12, 5, 16>;
 	Map_Add(map, "key", 20);
 	Map_Remove(map, "key");
 	ASSERT_FALSE(Map_ContainsKey(map, "key"));
@@ -50,7 +51,7 @@ Test:Remove1()
 
 Test:Remove2()
 {
-	new Map:map<12, 16>;
+	new Map:map<12, 5, 16>;
 	Map_Add(map, "key", 20);
 	Map_Add(map, "key1", 20);
 	Map_Add(map, "key2", 20);
@@ -60,7 +61,7 @@ Test:Remove2()
 	ASSERT(Map_ContainsKey(map, "key2"));
 }
 
-new Map:map1<100, 16>;
+new Map:map1<100, 5, 16>;
 Test:Add100()
 {
 	new key[7];
@@ -78,7 +79,7 @@ Test:Add100()
 	}
 }
 
-new Map:map2<100, 16>;
+new Map:map2<100, 5, 16>;
 Test:Remove50()
 {
 	new key[7];
