@@ -1,10 +1,10 @@
 #define MAX_COLLISIONS				(10)
 #define Map:%0<%1,%2>				Map:%0[(%1)][MAX_COLLISIONS][(%2) + 2]
 
-static const FNV_offset_basis = 2166136261;
-static const FNV_prime = 16777619;
+const FNV_offset_basis = 2166136261;
+const FNV_prime = 16777619;
 
-static stock fnv1(const str[], &len = -1) {
+stock fnv1(const str[], &len = -1) {
     if(len < 0) {
         len = strlen(str);
     }
@@ -34,7 +34,7 @@ stock Map_Add(Map:map[][][], const key[], value, maxkeys = sizeof map, maxKeySiz
 	return 1;
 }
 
-stock Map_Value(const Map:map[][][], const key[], maxkeys = sizeof map)
+stock Map_GetValue(const Map:map[][][], const key[], maxkeys = sizeof map)
 {
 	new index = fnv1(key) % maxkeys;
 	for(new i = 0; i < MAX_COLLISIONS && _:map[index][i][1] != '\0'; ++i)
@@ -66,8 +66,8 @@ stock Map_Remove(Map:map[][][], const key[], maxkeys = sizeof map, size3 = sizeo
 	}
 	if(!found)
 		return 0;
-	--i;
 
+	--i;
 	for(; i < MAX_COLLISIONS - 1 && _:map[index][i][1] != '\0'; ++i)
 	{
 		memcpy(_:map[index][i], _:map[index][i+1], 0, size3 * 4,  size3);
